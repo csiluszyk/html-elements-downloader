@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import sys
+from multiprocessing import Process, Lock
+
 from argparse import ArgumentParser
 
 
@@ -60,7 +62,15 @@ def _str_to_b(s, n=255, enc='utf-8'):
     return s.encode(enc)[:n].decode(enc, 'ignore').encode(enc)
 
 
-def main():
+def main(l, f, n, s):
+    result = get_HTML_element(f=args.f, n=n, s=args.s)
+
+    l.acquire()
+    print(result)
+    l.release()
+
+
+if __name__ == "__main__":
     parser = ArgumentParser(
         description= 'Download HTML element from given RSS feed.')
     parser.add_argument('-f', required=True)
@@ -74,13 +84,7 @@ def main():
     except ValueError:
         sys.exit('Invalid given numbers!')
 
-    for n in numbers:
-        try:
-            print(get_HTML_element(f=args.f, n=n, s=args.s))
-        except FeedNotExists:
-            sys.stderr.write('Feed item no. {0} doesn\'t  exists!'.format(n))
-        except HTMLElementNotExists:
-            sys.stderr.write('Invalid  xpath!')
+    lock = Lock()
 
-if __name__ == "__main__":
-    main()
+    for n in numbers:
+        Process(target=main, args=(lock, args.f, n, args.s)).start()
