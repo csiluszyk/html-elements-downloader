@@ -67,6 +67,7 @@ def main(l, f, n, s):
 
     l.acquire()
     print(result)
+    #_str_to_b(result)
     l.release()
 
 
