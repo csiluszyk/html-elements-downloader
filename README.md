@@ -12,7 +12,7 @@ Installation
 Ensure that required system dependencies are installed:
 
 * python3.1
-* [virtualenv] (Debian Squeeze package: *python-virtualenv*)
+* [virtualenv](http://www.virtualenv.org/en/latest/index.html) (Debian Squeeze package: *python-virtualenv*)
 * git
 
 It should be easier to begin with a separate folder at first:
@@ -29,24 +29,18 @@ and to install script inside a virtualenv
 Then script and its dependencies can be installed by simply running:
 
     git clone git://github.com/czaarek/html-elements-downloader.git
-    cd html-elements-downloader
     pip install -e .
 
 After this you can run script, e.g.:
 
-    python html_elements_downloader.py -f http://feeds.feedburner.com/TechCrunch -n 2,4 -s /html/body/div
+     python html_elements_downloader.py -f http://feeds.feedburner.com/TechCrunch -n 2,4 -s /html/body/div
 
-[virtualenv]: http://www.virtualenv.org/en/latest/index.html
 
 Dependencies
 ------------
 
 This script uses following third part libraries:
 
-* [argparse] (to parse command line arguments)
-* [feedparser] (to parse given RSS feed and get from it sites addresses)
-* [lxml] (to get HTML element from XPath)
-
-[argparse]: http://code.google.com/p/argparse/
-[feedparser]: http://code.google.com/p/feedparser/
-[lxml]: http://lxml.de/
+* [argparse](http://code.google.com/p/argparse/) (to parse command line arguments)
+* [feedparser](http://code.google.com/p/feedparser/) (to parse given RSS feed and get from it sites addresses)
+* [lxml](http://lxml.de/) (to get HTML element from XPath)
