@@ -18,7 +18,7 @@ if os.getuid() == 0:  # root
     sys.exit(2)
 
 setup(
-    name='htmlelementsdownloader',
+    name='html-elements-downloader',
     version = '0.1.dev',
     description='Script for downloading HTML element from given RSS feed.',
     author='Cezary Siłuszyk',

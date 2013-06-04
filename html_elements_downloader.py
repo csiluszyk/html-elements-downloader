@@ -15,12 +15,20 @@ class HTMLElementNotExists(Exception):
     pass
 
 
+def _unpack(s):
+    # Returns a given string without first and last HTML tag
+    if s and s[0] == '<' and s[-1] == '>':
+        return s[s.find('>')+1:s.rfind('<')]
+    else:
+        return s
+
+
 def get_HTML_element(f, n, s):
     """Returns a string representation of HTML element.
 
        :param f: RSS feed URL
        :type f: str
-       :param n: number of feed item (numbered from one)
+       :param n: number of feed item (numbered from zero)
        :type n: int
        :param s: xpath to element
        :type s: str
@@ -34,23 +42,24 @@ def get_HTML_element(f, n, s):
 
     try:
         response = urlopen(feed['items'][n]['link'])
-    except IndexError:
-        raise FeedNotExists('Feed {0} doesn\'t  exists!'.format(n))
+    except IndexError as e:
+        raise FeedNotExists('Item {0} doesn\'t  exist!'.format(n)) from e
 
     enc = response.headers.get('content-type', 'utf-8').split('charset=')[-1]
     tree = etree.parse(response, etree.HTMLParser())
 
     try:
         el = clean_html(etree.tostring(tree.xpath(s)[0]))
-    except IndexError:
-        raise HTMLElementNotExists()
+    except IndexError as e:
+        raise HTMLElementNotExists(
+                'HTML element for item {0} doesn\'t exist!'.format(n)) from e
 
     try:
         el = el.decode(enc, 'ignore')
     except LookupError:
         el = el.decode('utf-8', 'ignore')
 
-    return el
+    return _unpack(el)
 
 
 def _str_to_b(s, n=255, enc='utf-8'):
@@ -63,11 +72,13 @@ def _str_to_b(s, n=255, enc='utf-8'):
 
 
 def main(l, f, n, s):
-    result = get_HTML_element(f=args.f, n=n, s=args.s)
+    try:
+        result = get_HTML_element(f=args.f, n=n, s=args.s)
+    except (FeedNotExists, HTMLElementNotExists) as e:
+        result = str(e)
 
     l.acquire()
     print(result)
-    #_str_to_b(result)
     l.release()
 
 
@@ -81,7 +92,7 @@ if __name__ == "__main__":
 
     # EAFP > LBYL
     try:
-        numbers = set(map(int, args.n.split(',')))
+        numbers = set(map(lambda x: int(x) - 1, args.n.split(',')))
     except ValueError:
         sys.exit('Invalid given numbers!')
 

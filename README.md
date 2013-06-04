@@ -1,8 +1,8 @@
 html-elements-downloader
 ========================
 
-html-elements-downloader is a tool for downloading HTML element given in XPath
-from specific RSS feed. It supports all major RSS standards
+html-elements-downloader is a tool for downloading HTML content of element
+given in XPath from specific RSS feed. It supports all major RSS standards
 (including RSS 0.9x, RSS 1.0, RSS 2.0, CDF, Atom 0.3, and Atom 1.0)
 
 
