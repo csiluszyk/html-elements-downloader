@@ -29,11 +29,12 @@ and to install script inside a virtualenv
 Then script and its dependencies can be installed by simply running:
 
     git clone git://github.com/czaarek/html-elements-downloader.git
+    cd html-elements-downloader
     pip install -e .
 
 After this you can run script, e.g.:
 
-     python html_elements_downloader.py -f http://feeds.feedburner.com/TechCrunch -n 2,4 -s /html/body/div
+    python html_elements_downloader.py -f http://feeds.feedburner.com/TechCrunch -n 2,4 -s /html/body/div
 
 [virtualenv]: http://www.virtualenv.org/en/latest/index.html
 
