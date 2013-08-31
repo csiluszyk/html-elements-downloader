@@ -19,15 +19,15 @@ if os.getuid() == 0:  # root
 
 setup(
     name='html-elements-downloader',
-    version = '0.1.dev',
+    version='0.2.dev',
     description='Script for downloading HTML element from given RSS feed.',
     author='Cezary Siłuszyk',
     author_email='cezarysiluszyk@gmail.com',
     url='https://github.com/czaarek/html-elements-downloader',
     install_requires=[
-        "argparse",
-        "feedparser",
-        "lxml",
+        'argparse',
+        'feedparser',
+        'lxml',
     ],
     packages=find_packages(exclude=['ez_setup']),
     include_package_data=True,

@@ -1,7 +1,9 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import unittest
 
-from html_elements_downloader import _str_to_b, _unpack, get_HTML_element, \
-    FeedNotExists
+from html_elements_downloader import _str_to_b, _unpack
 
 
 class TestHTMLElementsDownloader(unittest.TestCase):
@@ -13,17 +15,16 @@ class TestHTMLElementsDownloader(unittest.TestCase):
         self.assertEqual(sliced_in_the_middle, b'jest')
         self.assertEqual(sliced_in_the_middle, properly_sliced)
 
-    def test_get_HTML_element(self):
-        feed = '<feed xmlns="http://www.w3.org/2005/Atom"><entry>' \
-               '<link type="text/html" href="http://www.example.com/"/>' \
-               '</entry></feed>'
-        with self.assertRaises(FeedNotExists):
-            get_HTML_element(feed, 1, '/')
-
     def test_unpack(self):
         self.assertEqual('', _unpack('<br />'))
         self.assertEqual('<a>link</a>', _unpack('<p><a>link</a></p>'))
         self.assertEqual('hedgehog', _unpack('hedgehog'))
+        self.assertEqual('<piece>raisins</piece>',
+                         _unpack('<cake><piece>raisins</piece></cake>'))
+        self.assertEqual('<piece>raisins</piece>',
+                         _unpack('<cake><piece>raisins</piece></cake>'))
+        self.assertEqual('gift',
+                         _unpack(' <wrapping_paper>gift</wrapping_paper>  '))
 
 if __name__ == '__main__':
     unittest.main()
