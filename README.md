@@ -39,7 +39,7 @@ After this you can run script, e.g.:
 
 or run the tests:
 
-    python test.py
+    python tests.py
 
 Dependencies
 ------------
